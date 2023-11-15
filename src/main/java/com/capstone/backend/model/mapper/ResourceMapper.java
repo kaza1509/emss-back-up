@@ -2,17 +2,12 @@ package com.capstone.backend.model.mapper;
 
 import com.capstone.backend.entity.*;
 import com.capstone.backend.entity.Class;
-import com.capstone.backend.entity.type.ActionType;
 import com.capstone.backend.model.dto.resource.*;
 import com.capstone.backend.model.dto.tag.TagSuggestDTOResponse;
-import com.capstone.backend.repository.UserResourceRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 
 import java.util.List;
 
-import static com.capstone.backend.utils.Constants.HOST;
-import static com.capstone.backend.utils.Constants.HOST_SERVER;
+import static com.capstone.backend.utils.Constants.HOST_SERVER_RESOURCE;
 
 public class ResourceMapper {
     public static ResourceDTOResponse toResourceDTOResponse(Resource resource) {
@@ -25,8 +20,8 @@ public class ResourceMapper {
                 .active(resource.getActive())
                 .approveType(resource.getApproveType())
                 .visualType(resource.getVisualType())
-                .thumbnailSrc(HOST_SERVER + "/" + resource.getThumbnailSrc())
-                .resourceSrc(HOST_SERVER + "/" + resource.getResourceSrc())
+                .thumbnailSrc(HOST_SERVER_RESOURCE + "/" + resource.getThumbnailSrc())
+                .resourceSrc(HOST_SERVER_RESOURCE + "/" + resource.getResourceSrc())
                 .point(resource.getPoint())
                 .size(resource.getSize())
                 .build();
@@ -35,7 +30,7 @@ public class ResourceMapper {
     public static ResourceViewDTOResponse toResourceViewDTOResponse(Resource resource, boolean isSave) {
         return ResourceViewDTOResponse.builder()
                 .id(resource.getId())
-                .thumbnailSrc(HOST_SERVER + "/" + resource.getThumbnailSrc())
+                .thumbnailSrc(HOST_SERVER_RESOURCE + "/" + resource.getThumbnailSrc())
                 .point(resource.getPoint())
                 .name(resource.getName())
                 .isSave(isSave)

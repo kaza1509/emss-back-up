@@ -94,7 +94,7 @@ public class UserResourceCriteria {
         return PagingUserResourceDTOResponse.builder()
                 .totalElement(totalResource)
                 .totalPage(totalPage)
-                .data(userResourceDTOResponses)
+                .data(assignNumber(userResourceDTOResponses))
                 .build();
     }
 
@@ -156,7 +156,7 @@ public class UserResourceCriteria {
         return PagingUserResourceDTOResponse.builder()
                 .totalElement(totalResource)
                 .totalPage(totalPage)
-                .data(userResourceDTOResponses)
+                .data(assignNumber(userResourceDTOResponses))
                 .build();
     }
 
@@ -235,19 +235,6 @@ public class UserResourceCriteria {
                 .build();
     }
 
-    public List<UserResourceDTOResponse> assignNumber(List<UserResourceDTOResponse> userResourceDTOResponses) {
-        Map<String, Long> countMap = new HashMap<>();
-
-        return userResourceDTOResponses.stream()
-                .peek(userResourceDTOResponse -> {
-                    String name = userResourceDTOResponse.getResourceName();
-                    String nameIgnoreCase = userResourceDTOResponse.getResourceName().toLowerCase();
-                    Long count = countMap.getOrDefault(nameIgnoreCase, 1L);
-                    countMap.put(name, count + 1);
-                    userResourceDTOResponse.setResourceName(name + "(" + count + ")");
-                }).toList();
-    }
-
     public PagingUserResourceDTOResponse viewSearchMyReportResource(ReportResourceDTOFilter request) {
         Map<String, Object> params = new HashMap<>();
         User user = userHelper.getUserLogin();
@@ -313,5 +300,18 @@ public class UserResourceCriteria {
                 .totalPage(totalPage)
                 .data(assignNumber(userResourceDTOResponses))
                 .build();
+    }
+
+    public List<UserResourceDTOResponse> assignNumber(List<UserResourceDTOResponse> userResourceDTOResponses) {
+        Map<String, Long> countMap = new HashMap<>();
+
+        return userResourceDTOResponses.stream()
+                .peek(userResourceDTOResponse -> {
+                    String name = userResourceDTOResponse.getResourceName().trim();
+                    String nameIgnoreCase = userResourceDTOResponse.getResourceName().toLowerCase();
+                    Long count = countMap.getOrDefault(nameIgnoreCase, 1L);
+                    countMap.put(nameIgnoreCase, count + 1);
+                    userResourceDTOResponse.setResourceName(name + "(" + count + ")");
+                }).toList();
     }
 }

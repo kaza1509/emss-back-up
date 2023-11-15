@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
-import javax.swing.*;
 import java.util.List;
 
 @Service
@@ -130,7 +129,7 @@ public class RoleServiceImpl implements RoleService {
                 .toList();
         return UserRoleDTOResponse.builder()
                 .userId(user.getId())
-                .avatar(Constants.HOST_SERVER + "/" + user.getAvatar())
+                .avatar(Constants.HOST_SERVER_RESOURCE + "/" + user.getAvatar())
                 .email(user.getEmail())
                 .username(user.getUsername())
                 .roleDTODisplays(roleDTODisplays)

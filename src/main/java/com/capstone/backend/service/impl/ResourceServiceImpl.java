@@ -442,6 +442,11 @@ public class ResourceServiceImpl implements ResourceService {
                     .needCheckPermissionResource(userLoggedIn, resourceCurrent, PermissionResourceType.V);
             if (!isPermission)
                 throw ApiException.forBiddenException(messageException.MSG_NO_PERMISSION);
+            //can view thumbnail without resource src
+            System.out.println(filename);
+            if(userLoggedIn == null && resourceCurrent.getResourceSrc().equals(filename)) {
+                throw ApiException.forBiddenException(messageException.MSG_NO_PERMISSION);
+            }
         }
         Path root = Paths.get("documents");
         String filePath = root.resolve(filename).toString();

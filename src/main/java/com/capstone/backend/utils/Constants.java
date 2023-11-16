@@ -24,7 +24,7 @@ public class Constants {
             "/api/v1/resource/tags"
     };
     public static String[] LIST_RESOURCE_DEFAULT = new String[] {
-            "thumbnail_mp3.jpg", "thumbnail_mp4.png"
+            "thumbnail_mp3.jpg", "thumbnail_mp4.png", "default-avatar.jpg"
     };
     public static String CREATOR_RESOURCE_PERMISSION = "CDRUV";
     public static String CREATOR_RESOURCE_PERMISSION_MESSAGE = "Owner";

@@ -195,7 +195,6 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     private List<ResourceViewDTOResponse> getResourceRelates(Resource resource, User userLoggedIn, List<String> listTagNames) {
-        System.out.println(ResourceType.getResourceByLesson().contains(resource.getResourceType()));
         if (ResourceType.getResourceByLesson().contains(resource.getResourceType())) {
             return resourceTagRepository
                     .findAllResourceByLessonIdSameResourceType(resource.getResourceType(), resource.getId(), resource.getLesson().getId())
@@ -434,18 +433,13 @@ public class ResourceServiceImpl implements ResourceService {
     public org.springframework.core.io.Resource getResourceIOByFilename(String filename) {
         var userLoggedIn = userHelper.getUserLogin();
         var isDefaultResource = Arrays.stream(Constants.LIST_RESOURCE_DEFAULT).anyMatch(r -> r.equalsIgnoreCase(filename));
-
         if (isDefaultResource) {
             return getResourceFile(filename);
         }
 
         User user = userRepository.findUserByAvatarUrl(filename);
         if (user != null) {
-            if (userLoggedIn != null && !userLoggedIn.getAvatar().equalsIgnoreCase(filename)) {
-                throw ApiException.forBiddenException(messageException.MSG_NO_PERMISSION);
-            } else if (userLoggedIn != null && userLoggedIn.getAvatar().equalsIgnoreCase(filename)) {
-                return getResourceFile(filename);
-            }
+            return getResourceFile(filename);
         }
 
         var resourceCurrent = resourceRepository.findResourceByResourceSrcOrThumbnailSrc(filename)
@@ -458,7 +452,8 @@ public class ResourceServiceImpl implements ResourceService {
         //can view thumbnail without resource src
         if (resourceCurrent.getTabResourceType() != TabResourceType.IMAGE
                 && resourceCurrent.getResourceSrc().equalsIgnoreCase(filename)
-                && userLoggedIn == null) {
+                && userLoggedIn == null
+                && resourceCurrent.getResourceType() != ResourceType.MP4) {
             throw ApiException.forBiddenException(messageException.MSG_NO_PERMISSION);
         }
         return getResourceFile(filename);

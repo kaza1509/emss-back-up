@@ -3,6 +3,7 @@ package com.capstone.backend.repository.criteria;
 import com.capstone.backend.entity.Resource;
 import com.capstone.backend.entity.User;
 import com.capstone.backend.entity.type.ActionType;
+import com.capstone.backend.entity.type.ResourceType;
 import com.capstone.backend.model.dto.resource.PagingResourceDTOResponse;
 import com.capstone.backend.model.dto.resource.ResourceMediaDTOFilter;
 import com.capstone.backend.model.dto.resource.ResourceViewDTOResponse;
@@ -80,6 +81,9 @@ public class ResourceCriteria {
 
         List<ResourceViewDTOResponse> resourceViewDTOResponses = resourceList.stream()
                 .map(resource -> {
+                    if(resource.getResourceType() == ResourceType.MP4) {
+                        resource.setThumbnailSrc(resource.getResourceSrc());
+                    }
                     boolean isSave = false;
                     if (userLoggedIn != null)
                         isSave = userResourceRepository

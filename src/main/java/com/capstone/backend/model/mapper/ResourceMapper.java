@@ -52,6 +52,7 @@ public class ResourceMapper {
                 .email(user.getEmail())
                 .username(user.getUsername())
                 .permission(permission)
+                .avatar(HOST_SERVER_RESOURCE + "/" + user.getAvatar())
                 .build();
     }
 
@@ -62,7 +63,7 @@ public class ResourceMapper {
         Subject subject = resource.getSubject();
         BookSeries bookSeries = null;
         Lesson lesson = resource.getLesson();
-        if(lesson != null) {
+        if (lesson != null) {
             bookSeries = subject.getBookSeriesSubjects().get(0).getBookSeries();
             classObject = bookSeries.getClassObject();
             chapter = lesson.getChapter();

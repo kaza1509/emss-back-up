@@ -2,6 +2,7 @@ package com.capstone.backend.model.mapper;
 
 import com.capstone.backend.entity.Class;
 import com.capstone.backend.entity.*;
+import com.capstone.backend.entity.type.ResourceType;
 import com.capstone.backend.model.dto.resource.*;
 import com.capstone.backend.model.dto.tag.TagSuggestDTOResponse;
 
@@ -28,6 +29,8 @@ public class ResourceMapper {
     }
 
     public static ResourceViewDTOResponse toResourceViewDTOResponse(Resource resource, boolean isSave) {
+        String resourceSrc = resource.getResourceType() == ResourceType.MP4
+                ? HOST_SERVER_RESOURCE + "/" +resource.getResourceSrc():null;
         return ResourceViewDTOResponse.builder()
                 .id(resource.getId())
                 .thumbnailSrc(HOST_SERVER_RESOURCE + "/" + resource.getThumbnailSrc())
@@ -36,6 +39,7 @@ public class ResourceMapper {
                 .isSave(isSave)
                 .resourceType(resource.getResourceType())
                 .viewCount(resource.getViewCount())
+                .resourceSrc(resourceSrc)
                 .build();
     }
 

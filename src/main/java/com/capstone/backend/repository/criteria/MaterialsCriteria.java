@@ -157,9 +157,6 @@ public class MaterialsCriteria {
 
         List<ResourceViewDTOResponse> resourceViewDTOResponses = resourceList.stream()
                 .map(resource -> {
-                    if(resource.getResourceType() == ResourceType.MP4) {
-                        resource.setThumbnailSrc(resource.getResourceSrc());
-                    }
                     boolean isSave = false;
                     if (userLoggedIn != null)
                         isSave = userResourceRepository

@@ -102,5 +102,12 @@ public class ClassServiceImpl implements ClassService {
                 .toList();
     }
 
+    @Override
+    public List<ClassDTOResponse> getListClassesBySubjectId(Long subjectId) {
+        return classRepository.findAllBySubjectId(subjectId)
+                .stream().map(ClassMapper::toClassDTOResponse)
+                .toList();
+    }
+
 
 }

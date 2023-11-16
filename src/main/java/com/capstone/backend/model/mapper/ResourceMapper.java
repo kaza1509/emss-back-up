@@ -1,7 +1,7 @@
 package com.capstone.backend.model.mapper;
 
-import com.capstone.backend.entity.*;
 import com.capstone.backend.entity.Class;
+import com.capstone.backend.entity.*;
 import com.capstone.backend.model.dto.resource.*;
 import com.capstone.backend.model.dto.tag.TagSuggestDTOResponse;
 

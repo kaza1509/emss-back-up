@@ -20,4 +20,6 @@ public interface ChapterService {
     public PagingDTOResponse searchChapter(ChapterDTOFilter chapterDTOFilter);
 
     public ChapterDTOResponse viewChapterById(Long id);
+
+    public List<ChapterDTOResponse> getListChapterByBookVolumeId(Long bookVolumeId);
 }

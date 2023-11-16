@@ -23,6 +23,9 @@ public class Constants {
             "/api/v1/resource/materials/**", "/api/v1/resource/medias/**",
             "/api/v1/resource/tags"
     };
+    public static String[] LIST_RESOURCE_DEFAULT = new String[] {
+            "thumbnail_mp3.jpg", "thumbnail_mp4.png"
+    };
     public static String CREATOR_RESOURCE_PERMISSION = "CDRUV";
     public static String CREATOR_RESOURCE_PERMISSION_MESSAGE = "Owner";
     public static String SHARED_RESOURCE_PERMISSION = "DV";

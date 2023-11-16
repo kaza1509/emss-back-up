@@ -63,4 +63,8 @@ public class SubjectController {
         return ResponseEntity.ok(subjectDTOResponse);
     }
 
+    @GetMapping("/list")
+    public ResponseEntity<?> getListSubjects() {
+        return ResponseEntity.ok(subjectService.getListSubjects());
+    }
 }

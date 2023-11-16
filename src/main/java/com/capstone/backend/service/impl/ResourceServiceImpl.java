@@ -103,8 +103,7 @@ public class ResourceServiceImpl implements ResourceService {
                     String resourceName;
                     if (request.getName() == null) {
                         resourceName = DataHelper.extractFilename(fileDTOResponse.getOriginalFileName());
-                    }
-                    else {
+                    } else {
                         resourceName = request.getName().trim();
                     }
                     Resource resource = Resource.builder()
@@ -434,20 +433,38 @@ public class ResourceServiceImpl implements ResourceService {
     @Override
     public org.springframework.core.io.Resource getResourceIOByFilename(String filename) {
         var userLoggedIn = userHelper.getUserLogin();
-        if (userLoggedIn == null || !userLoggedIn.getAvatar().equalsIgnoreCase(filename)) {
-            var resourceCurrent = resourceRepository.findResourceByResourceSrcOrThumbnailSrc(filename)
-                    .orElseThrow(() -> ApiException.notFoundException(messageException.MSG_RESOURCE_NOT_FOUND));
-            //check permission resource
-            boolean isPermission = checkPermissionResource
-                    .needCheckPermissionResource(userLoggedIn, resourceCurrent, PermissionResourceType.V);
-            if (!isPermission)
+        var isDefaultResource = Arrays.stream(Constants.LIST_RESOURCE_DEFAULT).anyMatch(r -> r.equalsIgnoreCase(filename));
+
+        if (isDefaultResource) {
+            return getResourceFile(filename);
+        }
+
+        User user = userRepository.findUserByAvatarUrl(filename);
+        if (user != null) {
+            if (userLoggedIn != null && !userLoggedIn.getAvatar().equalsIgnoreCase(filename)) {
                 throw ApiException.forBiddenException(messageException.MSG_NO_PERMISSION);
-            //can view thumbnail without resource src
-            System.out.println(filename);
-            if(userLoggedIn == null && resourceCurrent.getResourceSrc().equals(filename)) {
-                throw ApiException.forBiddenException(messageException.MSG_NO_PERMISSION);
+            } else if (userLoggedIn != null && userLoggedIn.getAvatar().equalsIgnoreCase(filename)) {
+                return getResourceFile(filename);
             }
         }
+
+        var resourceCurrent = resourceRepository.findResourceByResourceSrcOrThumbnailSrc(filename)
+                .orElseThrow(() -> ApiException.notFoundException(messageException.MSG_RESOURCE_NOT_FOUND));
+        //check permission resource
+        boolean isPermission = checkPermissionResource
+                .needCheckPermissionResource(userLoggedIn, resourceCurrent, PermissionResourceType.V);
+        if (!isPermission)
+            throw ApiException.forBiddenException(messageException.MSG_NO_PERMISSION);
+        //can view thumbnail without resource src
+        if (resourceCurrent.getTabResourceType() != TabResourceType.IMAGE
+                && resourceCurrent.getResourceSrc().equalsIgnoreCase(filename)
+                && userLoggedIn == null) {
+            throw ApiException.forBiddenException(messageException.MSG_NO_PERMISSION);
+        }
+        return getResourceFile(filename);
+    }
+
+    private org.springframework.core.io.Resource getResourceFile(String filename) {
         Path root = Paths.get("documents");
         String filePath = root.resolve(filename).toString();
         org.springframework.core.io.Resource resource = new ClassPathResource(filePath);

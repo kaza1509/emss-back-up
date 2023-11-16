@@ -65,5 +65,8 @@ public class ClassController {
         return ResponseEntity.ok(classDTOResponse);
     }
 
-
+    @GetMapping("/list-by-subject")
+    public ResponseEntity<?> getListClasses(@RequestParam Long subjectId) {
+        return ResponseEntity.ok(classService.getListClassesBySubjectId(subjectId));
+    }
 }

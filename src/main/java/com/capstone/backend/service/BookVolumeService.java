@@ -21,4 +21,6 @@ public interface BookVolumeService {
 
 
     BookVolumeDTOResponse viewBookVolumeById(Long id);
+
+    public List<BookVolumeDTOResponse> getListBookVolumeBySubjectId(Long subjectId, Long bookSeriesId);
 }

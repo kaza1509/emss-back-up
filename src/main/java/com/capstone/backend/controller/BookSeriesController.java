@@ -61,4 +61,9 @@ public class BookSeriesController {
         BookSeriesDTOResponse bookSeriesDTOResponse = bookSeriesService.viewBookSeriesById(id);
         return ResponseEntity.ok(bookSeriesDTOResponse);
     }
+
+    @GetMapping("/list-by-subject-class")
+    public ResponseEntity<?> getListBookSeriesBySubjectId(@RequestParam Long subjectId, @RequestParam Long classId) {
+        return ResponseEntity.ok(bookSeriesService.getListBookSeriesBySubjectId(subjectId, classId));
+    }
 }

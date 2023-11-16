@@ -60,4 +60,9 @@ public class LessonController {
         LessonDTOResponse lessonDTOResponse = lessonService.viewLessonById(id);
         return ResponseEntity.ok(lessonDTOResponse);
     }
+
+    @GetMapping("list-by-chapter")
+    public ResponseEntity<?> getListLessonsByChapterId(@RequestParam Long chapterId) {
+        return ResponseEntity.ok(lessonService.getListLessonsByChapterId(chapterId));
+    }
 }

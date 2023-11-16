@@ -21,4 +21,6 @@ public interface LessonService {
     public PagingDTOResponse searchLesson(LessonDTOFilter lessonDTOFilter);
 
     public LessonDTOResponse viewLessonById(Long id);
+
+    public List<LessonDTOResponse> getListLessonsByChapterId(Long chapterId);
 }

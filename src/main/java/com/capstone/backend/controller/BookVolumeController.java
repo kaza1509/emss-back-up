@@ -63,4 +63,9 @@ public class BookVolumeController {
         BookVolumeDTOResponse bookVolumeDTOResponse = bookVolumeService.viewBookVolumeById(id);
         return ResponseEntity.ok(bookVolumeDTOResponse);
     }
+
+    @GetMapping("/list-by-subject-bookseries")
+    public ResponseEntity<?> getListBookVolumeBySubjectId(@RequestParam Long subjectId, @RequestParam Long bookSeriesId) {
+        return ResponseEntity.ok(bookVolumeService.getListBookVolumeBySubjectId(subjectId, bookSeriesId));
+    }
 }

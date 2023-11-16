@@ -108,6 +108,13 @@ public class ChapterServiceImpl implements ChapterService {
         return ChapterMapper.toChapterDTOResponse(chapter);
     }
 
+    @Override
+    public List<ChapterDTOResponse> getListChapterByBookVolumeId(Long bookVolumeId) {
+        return chapterRepository.findAllByBookVolumeId(bookVolumeId)
+                .stream().map(ChapterMapper::toChapterDTOResponse)
+                .toList();
+    }
+
     // Check exist lesson in chapter
     boolean isCanDelete(Chapter chapter){
 

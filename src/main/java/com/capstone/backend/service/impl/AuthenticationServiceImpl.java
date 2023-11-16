@@ -98,6 +98,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private void revokeAllUserTokens(User user) {
         var validTokens = tokenRepository.findAlValidTokenByUser(user.getId());
+        validTokens.forEach(t -> System.out.println(t.getExpired()));
         if (validTokens.isEmpty()) return;
         validTokens.forEach(t -> {
             if (!jwtService.isTokenValid(t.getToken(), user)) {

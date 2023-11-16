@@ -61,4 +61,9 @@ public class ChapterController {
         ChapterDTOResponse chapterDTOResponse = chapterService.viewChapterById(id);
         return ResponseEntity.ok(chapterDTOResponse);
     }
+
+    @GetMapping("/list-by-bookvolume")
+    public ResponseEntity<?> getListChapterByBookVolumeId(Long bookVolumeId) {
+        return ResponseEntity.ok(chapterService.getListChapterByBookVolumeId(bookVolumeId));
+    }
 }

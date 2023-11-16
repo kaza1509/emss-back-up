@@ -21,4 +21,6 @@ public interface SubjectService {
     public PagingDTOResponse searchSubject(SubjectDTOFilter subjectDTOFilter);
 
     public SubjectDTOResponse viewSubjectById(Long id);
+
+    public List<SubjectDTOResponse> getListSubjects();
 }

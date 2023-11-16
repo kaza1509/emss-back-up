@@ -179,8 +179,8 @@ public class FileServiceImpl implements FileService {
             }
 
             //concat new filename and extension
-            String fileName = userLoggedIn.getUsername().concat(".").concat(fileNameExtension);
-            System.out.println(fileName);
+            String fileName = UUID.randomUUID().toString()
+                    .concat(".").concat(fileNameExtension);
             //save file name to folder
             FileCopyUtils.copy(
                     multipartFile.getBytes(),

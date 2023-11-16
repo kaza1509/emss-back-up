@@ -103,5 +103,12 @@ public class LessonServiceImpl implements LessonService {
         return LessonMapper.toLessonDTOResponse(lesson);
     }
 
+    @Override
+    public List<LessonDTOResponse> getListLessonsByChapterId(Long chapterId) {
+        return lessonRepository.findAllByChapterId(chapterId)
+                .stream().map(LessonMapper::toLessonDTOResponse)
+                .toList();
+    }
+
 
 }

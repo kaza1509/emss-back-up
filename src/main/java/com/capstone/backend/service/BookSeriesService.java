@@ -19,4 +19,6 @@ public interface BookSeriesService {
     public PagingDTOResponse searchBookSeries(BookSeriesDTOFilter bookSeriesDTOFilter);
 
     public BookSeriesDTOResponse viewBookSeriesById(Long id);
+
+    public List<BookSeriesDTOResponse> getListBookSeriesBySubjectId(Long subjectId, Long classId);
 }

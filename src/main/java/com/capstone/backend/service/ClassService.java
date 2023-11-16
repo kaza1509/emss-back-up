@@ -21,4 +21,6 @@ public interface ClassService {
     public PagingDTOResponse searchClass(ClassDTOFilter classDTOFilter);
 
     public List<ClassDTOResponse> getListClasses();
+
+    public List<ClassDTOResponse> getListClassesBySubjectId(Long subjectId);
 }

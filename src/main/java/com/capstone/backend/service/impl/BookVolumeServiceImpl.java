@@ -111,6 +111,13 @@ public class BookVolumeServiceImpl implements BookVolumeService {
         return BookVolumeMapper.toBookVolumeDTOResponse(bookVolume);
     }
 
+    @Override
+    public List<BookVolumeDTOResponse> getListBookVolumeBySubjectId(Long subjectId, Long bookSeriesId) {
+        return bookVolumeRepository.findAllBySubjectId(subjectId, bookSeriesId)
+                .stream().map(BookVolumeMapper::toBookVolumeDTOResponse)
+                .toList();
+    }
+
     // Check exist chapter in book volume
     boolean isCanDelete(BookVolume bookVolume) {
         return !chapterRepository.existsChapterByBookVolumeAndActiveTrue(bookVolume);

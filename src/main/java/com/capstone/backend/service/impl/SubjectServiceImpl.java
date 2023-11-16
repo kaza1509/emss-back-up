@@ -108,8 +108,14 @@ public class SubjectServiceImpl implements SubjectService {
         Subject subject = subjectRepository
                 .findById(id)
                 .orElseThrow(() -> ApiException.notFoundException("Subject is not found"));
-
         return SubjectMapper.toSubjectDTOResponse(subject);
+    }
+
+    @Override
+    public List<SubjectDTOResponse> getListSubjects() {
+        return subjectRepository.findAllByActiveTrue().stream()
+                .map(SubjectMapper::toSubjectDTOResponse)
+                .toList();
     }
 
     // Check exist book volume in subject

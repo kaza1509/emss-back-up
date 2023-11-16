@@ -2,34 +2,26 @@ package com.capstone.backend.service.impl;
 
 import com.capstone.backend.entity.BookSeries;
 import com.capstone.backend.entity.Class;
-import com.capstone.backend.entity.Subject;
 import com.capstone.backend.entity.User;
 import com.capstone.backend.exception.ApiException;
 import com.capstone.backend.model.dto.PagingDTOResponse;
 import com.capstone.backend.model.dto.bookseries.BookSeriesDTOFilter;
 import com.capstone.backend.model.dto.bookseries.BookSeriesDTORequest;
 import com.capstone.backend.model.dto.bookseries.BookSeriesDTOResponse;
-import com.capstone.backend.model.dto.classes.ClassDTOFilter;
 import com.capstone.backend.model.mapper.BookSeriesMapper;
 import com.capstone.backend.repository.BookSeriesRepository;
 import com.capstone.backend.repository.ClassRepository;
 import com.capstone.backend.repository.SubjectRepository;
 import com.capstone.backend.repository.criteria.BookSeriesCriteria;
-import com.capstone.backend.repository.criteria.ClassesCriteria;
 import com.capstone.backend.service.BookSeriesService;
 import com.capstone.backend.utils.UserHelper;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -108,6 +100,14 @@ public class BookSeriesServiceImpl implements BookSeriesService {
                 .orElseThrow(() -> ApiException.notFoundException("BookSeries is not found"));
         return BookSeriesMapper.toBookseriesDTOResponse(bookSeries);
     }
+
+    @Override
+    public List<BookSeriesDTOResponse> getListBookSeriesBySubjectId(Long subjectId, Long classId) {
+        return bookSeriesRepository.findAllBySubjectIdClassId(subjectId, classId)
+                .stream().map(BookSeriesMapper::toBookseriesDTOResponse)
+                .toList();
+    }
+
     // Check exist subject in book series
     boolean isCanDelete(BookSeries bookSeries) {
         return true;

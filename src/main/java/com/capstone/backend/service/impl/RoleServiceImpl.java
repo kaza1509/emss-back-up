@@ -37,8 +37,7 @@ public class RoleServiceImpl implements RoleService {
     SystemPermissionRepository systemPermissionRepository;
 
     @Override
-    public PagingRoleDTOResponse
-    viewSearchRole(RoleDTOFilter request) {
+    public PagingRoleDTOResponse viewSearchRole(RoleDTOFilter request) {
         return roleCriteria.viewSearchRole(request);
     }
 

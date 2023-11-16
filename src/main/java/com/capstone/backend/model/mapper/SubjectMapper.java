@@ -10,7 +10,6 @@ public class SubjectMapper {
                 .id(subject.getId())
                 .active(subject.getActive())
                 .createdAt(subject.getCreatedAt())
-//                .bookSeriesDTOResponse(BookSeriesMapper.toBookseriesDTOResponse(subject.getBookSeries()))
                 .userId(subject.getUserId())
                 .build();
     }

@@ -66,7 +66,8 @@ public class ClassController {
     }
 
     @GetMapping("/list-by-subject")
-    public ResponseEntity<?> getListClasses(@RequestParam Long subjectId) {
+    public ResponseEntity<?> getListClasses(@RequestParam(required = false) Long subjectId) {
+        System.out.println(subjectId);
         return ResponseEntity.ok(classService.getListClassesBySubjectId(subjectId));
     }
 }

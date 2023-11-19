@@ -20,5 +20,7 @@ public interface BookVolumeRepository extends JpaRepository<BookVolume, Long> {
             "where bv.active = true and bss.active = true and s.active = true and s.id = :subjectId and bss.bookSeries.id = :bookSeriesId")
     public List<BookVolume> findAllBySubjectId(Long subjectId, Long bookSeriesId);
 //    boolean existsBookVolumeBySubjectAndActiveTrue(Subject subject);
+
+    public List<BookVolume> findBookVolumeByActiveTrue();
 }
 

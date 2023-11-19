@@ -21,6 +21,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,7 +30,6 @@ import java.util.List;
 public class BookSeriesServiceImpl implements BookSeriesService {
     BookSeriesRepository bookSeriesRepository;
     ClassRepository classRepository;
-    SubjectRepository subjectRepository;
     BookSeriesCriteria bookSeriesCriteria;
     UserHelper userHelper;
 
@@ -103,9 +103,12 @@ public class BookSeriesServiceImpl implements BookSeriesService {
 
     @Override
     public List<BookSeriesDTOResponse> getListBookSeriesBySubjectId(Long subjectId, Long classId) {
-        return bookSeriesRepository.findAllBySubjectIdClassId(subjectId, classId)
-                .stream().map(BookSeriesMapper::toBookseriesDTOResponse)
-                .toList();
+        List<BookSeries> bookSeries = new ArrayList<>();
+        if(subjectId == null || classId == null) {
+            bookSeries = bookSeriesRepository.findBookSeriesByActiveTrue();
+        }
+        else bookSeries = bookSeriesRepository.findAllBySubjectIdClassId(subjectId, classId);
+        return bookSeries.stream().map(BookSeriesMapper::toBookseriesDTOResponse).toList();
     }
 
     // Check exist subject in book series

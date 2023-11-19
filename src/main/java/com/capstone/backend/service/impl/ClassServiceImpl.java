@@ -23,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -104,9 +105,12 @@ public class ClassServiceImpl implements ClassService {
 
     @Override
     public List<ClassDTOResponse> getListClassesBySubjectId(Long subjectId) {
-        return classRepository.findAllBySubjectId(subjectId)
-                .stream().map(ClassMapper::toClassDTOResponse)
-                .toList();
+        List<Class> classes = new ArrayList<>();
+        if(subjectId == null) {
+            classes = classRepository.findClassByActiveIsTrue();
+        }
+        else classes = classRepository.findAllBySubjectId(subjectId);
+        return classes.stream().map(ClassMapper::toClassDTOResponse).toList();
     }
 
 

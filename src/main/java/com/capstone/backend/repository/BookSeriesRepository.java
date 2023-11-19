@@ -15,4 +15,6 @@ public interface BookSeriesRepository extends JpaRepository<BookSeries, Long> {
     @Query("select bs from BookSeries bs join bs.bookSeriesSubjects bss join bss.subject s where " +
             "s.id = :subjectId and s.active = true and bss.active = true and bs.active = true and bs.classObject.id = :classId")
     public List<BookSeries> findAllBySubjectIdClassId(Long subjectId, Long classId);
+
+    public List<BookSeries> findBookSeriesByActiveTrue();
 }

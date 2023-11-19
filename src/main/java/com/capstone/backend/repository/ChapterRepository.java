@@ -20,4 +20,6 @@ public interface ChapterRepository extends JpaRepository<Chapter, Long> {
     @Query("select c from Chapter c join c.bookVolume bv where c.active = true " +
             "and bv.active = true and bv.id = :bookVolumeId")
     public List<Chapter> findAllByBookVolumeId(Long bookVolumeId);
+
+    public List<Chapter> findChapterByActiveTrue();
 }

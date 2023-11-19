@@ -21,4 +21,6 @@ public interface LessonRepository extends JpaRepository<Lesson, Long> {
     @Query("select le from Lesson le join le.chapter cha where le.active = true and " +
             "cha.active = true and cha.id = :chapterId")
     public List<Lesson> findAllByChapterId(Long chapterId);
+
+    public List<Lesson> findLessonByActiveTrue();
 }

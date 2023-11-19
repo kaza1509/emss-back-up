@@ -27,6 +27,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -113,9 +114,14 @@ public class BookVolumeServiceImpl implements BookVolumeService {
 
     @Override
     public List<BookVolumeDTOResponse> getListBookVolumeBySubjectId(Long subjectId, Long bookSeriesId) {
-        return bookVolumeRepository.findAllBySubjectId(subjectId, bookSeriesId)
-                .stream().map(BookVolumeMapper::toBookVolumeDTOResponse)
-                .toList();
+        List<BookVolume> bookVolumes = new ArrayList<>();
+        if(subjectId == null || bookSeriesId == null) {
+            bookVolumes = bookVolumeRepository.findBookVolumeByActiveTrue();
+        }
+        else {
+            bookVolumes = bookVolumeRepository.findAllBySubjectId(subjectId, bookSeriesId);
+        }
+        return bookVolumes.stream().map(BookVolumeMapper::toBookVolumeDTOResponse).toList();
     }
 
     // Check exist chapter in book volume

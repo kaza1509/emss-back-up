@@ -26,6 +26,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -110,9 +111,14 @@ public class ChapterServiceImpl implements ChapterService {
 
     @Override
     public List<ChapterDTOResponse> getListChapterByBookVolumeId(Long bookVolumeId) {
-        return chapterRepository.findAllByBookVolumeId(bookVolumeId)
-                .stream().map(ChapterMapper::toChapterDTOResponse)
-                .toList();
+        List<Chapter> chapters = new ArrayList<>();
+        if(bookVolumeId == null) {
+            chapters = chapterRepository.findChapterByActiveTrue();
+        }
+        else {
+            chapters = chapterRepository.findAllByBookVolumeId(bookVolumeId);
+        }
+        return chapters.stream().map(ChapterMapper::toChapterDTOResponse).toList();
     }
 
     // Check exist lesson in chapter

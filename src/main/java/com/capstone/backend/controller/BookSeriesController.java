@@ -63,7 +63,10 @@ public class BookSeriesController {
     }
 
     @GetMapping("/list-by-subject-class")
-    public ResponseEntity<?> getListBookSeriesBySubjectId(@RequestParam Long subjectId, @RequestParam Long classId) {
+    public ResponseEntity<?> getListBookSeriesBySubjectId(
+            @RequestParam(required = false) Long subjectId,
+            @RequestParam(required = false) Long classId
+    ) {
         return ResponseEntity.ok(bookSeriesService.getListBookSeriesBySubjectId(subjectId, classId));
     }
 }

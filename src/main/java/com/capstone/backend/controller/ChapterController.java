@@ -63,7 +63,7 @@ public class ChapterController {
     }
 
     @GetMapping("/list-by-bookvolume")
-    public ResponseEntity<?> getListChapterByBookVolumeId(Long bookVolumeId) {
+    public ResponseEntity<?> getListChapterByBookVolumeId(@RequestParam(required = false) Long bookVolumeId) {
         return ResponseEntity.ok(chapterService.getListChapterByBookVolumeId(bookVolumeId));
     }
 }

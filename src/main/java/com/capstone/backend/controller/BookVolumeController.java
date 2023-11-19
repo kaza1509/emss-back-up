@@ -65,7 +65,10 @@ public class BookVolumeController {
     }
 
     @GetMapping("/list-by-subject-bookseries")
-    public ResponseEntity<?> getListBookVolumeBySubjectId(@RequestParam Long subjectId, @RequestParam Long bookSeriesId) {
+    public ResponseEntity<?> getListBookVolumeBySubjectId(
+            @RequestParam(required = false) Long subjectId,
+            @RequestParam(required = false) Long bookSeriesId
+    ) {
         return ResponseEntity.ok(bookVolumeService.getListBookVolumeBySubjectId(subjectId, bookSeriesId));
     }
 }

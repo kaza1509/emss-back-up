@@ -29,6 +29,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -105,10 +106,13 @@ public class LessonServiceImpl implements LessonService {
 
     @Override
     public List<LessonDTOResponse> getListLessonsByChapterId(Long chapterId) {
-        return lessonRepository.findAllByChapterId(chapterId)
-                .stream().map(LessonMapper::toLessonDTOResponse)
-                .toList();
+        List<Lesson> lessons = new ArrayList<>();
+        if(chapterId == null) {
+            lessons = lessonRepository.findLessonByActiveTrue();
+        }
+        else {
+            lessons = lessonRepository.findAllByChapterId(chapterId);
+        }
+        return lessons.stream().map(LessonMapper::toLessonDTOResponse).toList();
     }
-
-
 }

@@ -62,7 +62,7 @@ public class LessonController {
     }
 
     @GetMapping("list-by-chapter")
-    public ResponseEntity<?> getListLessonsByChapterId(@RequestParam Long chapterId) {
+    public ResponseEntity<?> getListLessonsByChapterId(@RequestParam(required = false) Long chapterId) {
         return ResponseEntity.ok(lessonService.getListLessonsByChapterId(chapterId));
     }
 }

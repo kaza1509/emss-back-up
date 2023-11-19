@@ -16,7 +16,7 @@ public interface ClassRepository extends JpaRepository<Class, Long> {
     Optional<Class> findByIdAndActiveTrue(Long id);
     public List<Class> findClassByActiveIsTrue();
 
-    @Query("select bs.classObject from BookSeries bs join bs.bookSeriesSubjects bss join bss.subject s where s.id = :subjectId and " +
+    @Query("select distinct bs.classObject from BookSeries bs join bs.bookSeriesSubjects bss join bss.subject s where s.id = :subjectId and " +
             "s.active = true and bss.active = true and bs.active = true")
     public List<Class> findAllBySubjectId(Long subjectId);
 }
